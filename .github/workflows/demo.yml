@@ -26,7 +26,6 @@ jobs:
     steps:
       - name: Deploy
         run: echo I am deploying to Development!
-      - run: exit 1
 
   DeployStaging:
     name: Deploy to Staging
