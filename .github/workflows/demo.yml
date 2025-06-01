@@ -26,6 +26,7 @@ jobs:
     steps:
       - name: Deploy
         run: echo I am deploying to Development!
+      - run: exit 1
 
   DeployStaging:
     name: Deploy to Staging
@@ -39,6 +40,7 @@ jobs:
       - name: Deploy
         run: echo I am deploying to Staging!
       - run : echo ${{vars.GAME}}
+      - run : echo ${{secrets.API}}
 
   DeployProd:
     name: Deploy to Production
@@ -51,4 +53,6 @@ jobs:
       - name: Deploy
         run: echo I am deploying to Production!
       - run : echo ${{vars.GAME}}
+      - run : echo ${{secrets.API}}
+
 
