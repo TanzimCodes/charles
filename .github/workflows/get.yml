@@ -1,0 +1,10 @@
+name: "Get Payload"
+
+on: workflow_dispatch
+
+jobs:
+ hiJon:
+  runs-on: ubuntu-latest
+  steps:
+   - name: first Step
+     run: echo hello first step

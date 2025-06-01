@@ -1,0 +1,10 @@
+name: 'Fist job'
+
+on: workflow_dispatch
+
+jobs:
+  first:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "First steps"
+        run: echo Hello world
