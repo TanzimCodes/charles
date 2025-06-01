@@ -1,0 +1,105 @@
+name: "workflow_1"
+
+on: workflow_dispatch
+
+env:
+  X_Y: y
+
+jobs:
+  testingEnv:
+    runs-on: ubuntu-18.04
+    environment:
+      name: staging
+      url: e9133nfdkfdi
+    steps:
+      - run: echo "Environment name is ${{ job.environment.name }}"
+  #test shell running
+  # testShell:
+  #   runs-on: ubuntu-18.04
+  #   env:
+  #     name: Tanzim
+  #     date: 94
+  #   steps:
+  #     - name: Print all envs
+  #       run: echo $name $date $Gallery
+  #     # - name: add gallery to env
+  #     #   run: echo "Gallery=Art gallery" >> $GITHUB_ENV
+  #     - name: Declare it at state level
+  #       env:
+  #         Gallery: Japan artwork
+  #       run: echo $Gallery
+
+  #     - name: try printing gallery again
+  #       run: env
+
+  # testENV:
+  #   needs: [testShell]
+  #   runs-on: ubuntu-18.04
+  #   steps:
+  #     - run: echo $MY_VAR
+
+  # uploadArtifact:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: echo "hello sundar punchid" >> message.txt
+
+  #     - uses: actions/upload-artifact@v4
+  #       with:
+  #         name: MyArtifacto
+  #         path: message.txt
+
+  # downloadArtifact:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         name: MyArtifacto
+  #     - name: Read MyArtifacto
+  #       run: cat message.txt
+
+  # first:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     xyz: "HELLO MY FURRY FRIENDS"
+  #     api: ${{steps.myId.outputs.api}}
+  #     dcp: ${{steps.myId.outputs.pbc}}
+  #   steps:
+  #     - id: myId
+  #       run: |
+  #         echo "api=my key" >> $GITHUB_OUTPUT
+  #         echo "pbc=my second key" >> $GITHUB_OUTPUT
+
+  #     - name: "Fail job manually"
+  #       run: exit 1
+
+  # second:
+  #   if: ${{always()}}
+  #   runs-on: ubuntu-18.04
+  #   needs: [first]
+  #   steps:
+  #     - name: "Fetch Data from First job"
+  #       run: |
+  #         echo ${{needs.first.outputs.xyz}}
+  #         echo ${{needs.first.outputs.api}}
+  #         echo dpc output ${{needs.first.outputs.dcp}}
+
+  # thrid:
+  #   needs: [first, second]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: "Nice day for fishing"
+  #       run: echo I ran after first
+  #     - name: let's know the resutls of first and second
+  #       run: echo ${{needs.first.result}} ${{needs.second.result}}
+
+  # build:
+  #   runs-on: ubuntu-18.04
+  #   steps:
+  #     - run: echo 10
+
+  # cleanup:
+  #   runs-on: ubuntu-18.04
+  #   needs : [build]
+  #   steps:
+  #     - run: echo cleaning up resouceses
+  #     - run: echo ${{needs.build.result}}
