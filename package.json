@@ -20,5 +20,12 @@
   "description": "",
   "devDependencies": {
     "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "express": "^5.1.0",
+    "lodash": "^4.17.21",
+    "pm2": "^6.0.6",
+    "webpack": "^5.99.9"
   }
 }
