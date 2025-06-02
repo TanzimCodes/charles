@@ -1,22 +1,26 @@
-name: "Matrix build"
+name: "Self Hosted runner"
 
 on: workflow_dispatch
 
 jobs:
-  matrixbuild:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-      # fail-fast: true
-    runs-on: ${{matrix.os}}
+  try-self-hosted:
+    runs-on: [self-hosted]
     steps:
-    - name: Check OS version
-      run: |
-        if [ -f /etc/os-release ]; then
-          cat /etc/os-release
-        else
-          sw_vers
-        fi
+      - run: echo "Hello world"
+#   matrixbuild:
+#     strategy:
+#       matrix:
+#         os: [ubuntu-latest, macos-latest]
+#       # fail-fast: true
+#     runs-on: ${{matrix.os}}
+#     steps:
+#     - name: Check OS version
+#       run: |
+#         if [ -f /etc/os-release ]; then
+#           cat /etc/os-release
+#         else
+#           sw_vers
+#         fi
  
   # uploadFile:
   #     runs-on: ubuntu-latest
