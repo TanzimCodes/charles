@@ -1,12 +1,18 @@
 name: "Self Hosted runner"
 
-on: workflow_dispatch
+on: 
+  push:
+    branches:
+      - main
 
 jobs:
   try-self-hosted:
     runs-on: [self-hosted]
     steps:
-      - run: echo "Hello world"
+      - uses: actions/checkout@v4
+      - run: npm i
+      - run: npm run test
+      - run: building complete on windows
 #   matrixbuild:
 #     strategy:
 #       matrix:
