@@ -1,18 +1,31 @@
-name: "workflow_1"
+name: "Test artifact upload"
 
 on: workflow_dispatch
 
-env:
-  X_Y: y
-
 jobs:
-  testingEnv:
-    runs-on: ubuntu-18.04
-    environment:
-      name: staging
-      url: e9133nfdkfdi
+  uploadFile:
+      runs-on: ubuntu-latest
+      steps:
+        - run: echo "Hello world" >> bank.txt
+        - uses: actions/upload-artifact@v4
+          with:
+            name: Secret file
+            path: bank.txt
+  
+  downloadArtifact:
+    runs-on: ubuntu-latest
     steps:
-      - run: echo "Environment name is ${{ job.environment.name }}"
+      - uses: actions/download-artifact@v4
+        with:
+          name: Secret file
+      - run: cat bank.txt
+  # testingEnv:
+  #   runs-on: ubuntu-18.04
+  #   environment:
+  #     name: staging
+  #     url: e9133nfdkfdi
+  #   steps:
+  #     - run: echo "Environment name is ${{ job.environment.name }}"
   #test shell running
   # testShell:
   #   runs-on: ubuntu-18.04
