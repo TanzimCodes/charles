@@ -1,25 +1,34 @@
-name: "Test artifact upload"
+name: "Matrix build"
 
 on: workflow_dispatch
 
 jobs:
-  uploadFile:
-      runs-on: ubuntu-latest
-      steps:
-        - run: echo "Hello world" >> bank.txt
-        - uses: actions/upload-artifact@v4
-          with:
-            name: Secret file
-            path: bank.txt
-  
-  downloadArtifact:
-    runs-on: ubuntu-latest
-    needs: [uploadFile]
+  matrixbuild:
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04]
+      # fail-fast: true
+    runs-on: ${{matrix.os}}
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: Secret file
-      - run: cat bank.txt
+      - run: cat /etc/os-release
+ 
+  # uploadFile:
+  #     runs-on: ubuntu-latest
+  #     steps:
+  #       - run: echo "Hello world" >> bank.txt
+  #       - uses: actions/upload-artifact@v4
+  #         with:
+  #           name: Secret file
+  #           path: bank.txt
+
+  # downloadArtifact:
+  #   runs-on: ubuntu-latest
+  #   needs: [uploadFile]
+  #   steps:
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         name: Secret file
+  #     - run: cat bank.txt
   # testingEnv:
   #   runs-on: ubuntu-18.04
   #   environment:
