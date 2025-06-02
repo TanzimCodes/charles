@@ -10,16 +10,21 @@ jobs:
             - name: checkout
               uses: actions/checkout@v4
 
+            - name: setup Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: v16.14.2
+
+            - name: Get the version
+              id: nodeV
+              run: echo "version=$(node -v)" >> $GITHUB_OUTPUTS
+
             - name: cache the node
               uses: actions/cache@v4
               with:
                 path: '**/node_modules'
-                key: ${{runner.os}}-node-${{hashFiles('./package-lock.json')}}
+                key: ${{runner.os}}-node-${{hashFiles('./package-lock.json')}}-${{steps.nodeV.outputs.version}}
             
-            - name: setup Node
-              uses: actions/setup-node@v4
-              with:
-                node-version: 18
 
             - name: npm install
               run: npm ci
