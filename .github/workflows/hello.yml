@@ -12,6 +12,7 @@ jobs:
         nodeV: [18, 22]
     runs-on: [ubuntu-latest]
     steps:
+      - run: echo Running on node ${{matrix.nodeV}}
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -19,9 +20,8 @@ jobs:
       - name: Fail for node 22
         if: ${{matrix.nodeV == 22}}
         run: |
-         echo "Manually failing for 22"
-         exit 1
-      - run: echo Running on node ${{matrix.nodeV}}
+          echo "Manually failing for 22"
+          exit 1
       - run: npm i
       - run: npm run test
       - run: echo "building complete"
