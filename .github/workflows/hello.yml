@@ -6,23 +6,29 @@ on:
       - main
 
 jobs:
-  try-self-hosted:
-    strategy:
-      fail-fast: false
-      max-parallel: 1
-      matrix:
-        nodeV: [18, 22,20, 16]
+  callReuse:
+    uses: ./.github/workflows/reuse.yml
+    # with:
+    #   myName: Tanzim
+    secrets:
+      api: ${{secrets.API}}
+  # try-self-hosted:
+  #   strategy:
+  #     fail-fast: false
+  #     max-parallel: 1
+  #     matrix:
+  #       nodeV: [18, 22,20, 16]
       
-    runs-on: [ubuntu-latest]
-    steps:
-      - run: echo Running on node ${{matrix.nodeV}}
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{matrix.nodeV}}
-      - run: npm i
-      - run: npm run test
-      - run: echo "building complete"
+  #   runs-on: [ubuntu-latest]
+  #   steps:
+  #     - run: echo Running on node ${{matrix.nodeV}}
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{matrix.nodeV}}
+  #     - run: npm i
+  #     - run: npm run test
+  #     - run: echo "building complete"
 #   matrixbuild:
 #     strategy:
 #       matrix:
@@ -38,14 +44,14 @@ jobs:
 #           sw_vers
 #         fi
 
-# uploadFile:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - run: echo "Hello world" >> bank.txt
-#       - uses: actions/upload-artifact@v4
-#         with:
-#           name: Secret file
-#           path: bank.txt
+  # uploadFile:
+  #     runs-on: ubuntu-latest
+  #     steps:
+  #       - run: echo "Hello world" >> bank.txt
+  #       - uses: actions/upload-artifact@v4
+  #         with:
+  #           name: Secret file
+  #           path: bank.txt
 
 # downloadArtifact:
 #   runs-on: ubuntu-latest

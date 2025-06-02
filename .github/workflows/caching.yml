@@ -1,0 +1,30 @@
+name: Caching
+
+on:
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+
+            - name: cache the node
+              uses: actions/cache@v4
+              with:
+                path: '**/node_modules'
+                key: ${{runner.os}}-node-${{hashFiles('./package-lock.json')}}
+            
+            - name: setup Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: 18
+
+            - name: npm install
+              run: npm ci
+            
+            - name: run test
+              run: npm run test
+            
+            

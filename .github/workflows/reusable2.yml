@@ -1,0 +1,9 @@
+name: Use me senpai
+on:
+    workflow_call:
+
+jobs:
+    printOut:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo FUCK YEA FROM 2

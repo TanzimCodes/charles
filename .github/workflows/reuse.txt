@@ -1,0 +1,27 @@
+name: My Reusable workflow
+
+on:
+    workflow_call:
+        inputs:
+            myName:
+                required: true
+                type: string
+                default: CAKE
+        secrets:
+            api:
+                required: true
+
+
+jobs:
+    sum:
+     runs-on: ubuntu-latest
+     if: ${{inputs.myName != null}} 
+     steps:
+        - name: Check for secret
+          if: ${{ inputs.myName != '' }}
+          run: echo "Hello ${{secrets.api}}"
+        - run : echo "hello from ${{inputs.myName}} ${{secrets.api}}"
+    callWork:
+        needs: [sum]
+        uses: ./.github/workflows/reusable2.yml
+
