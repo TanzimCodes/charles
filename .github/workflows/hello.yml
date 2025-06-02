@@ -1,18 +1,30 @@
-name: "Self Hosted runner"
+name: "Testing different node"
 
-on: 
+on:
   push:
     branches:
       - main
 
 jobs:
   try-self-hosted:
-    runs-on: [self-hosted]
+    strategy:
+      matrix:
+        nodeV: [node18, node22]
+    runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node
+        with:
+          node-version: ${{matrix.nodeV}}
+      - name: Fail for node 22
+        if: ${{matrix.nodeV == 22}}
+        run: |
+         echo "Manually failing for 22"
+         exit 1
+      - run: echo Running on node ${{matrix.nodeV}}
       - run: npm i
       - run: npm run test
-      - run: echo "building complete on windows"
+      - run: echo "building complete"
 #   matrixbuild:
 #     strategy:
 #       matrix:
@@ -27,118 +39,118 @@ jobs:
 #         else
 #           sw_vers
 #         fi
- 
-  # uploadFile:
-  #     runs-on: ubuntu-latest
-  #     steps:
-  #       - run: echo "Hello world" >> bank.txt
-  #       - uses: actions/upload-artifact@v4
-  #         with:
-  #           name: Secret file
-  #           path: bank.txt
 
-  # downloadArtifact:
-  #   runs-on: ubuntu-latest
-  #   needs: [uploadFile]
-  #   steps:
-  #     - uses: actions/download-artifact@v4
-  #       with:
-  #         name: Secret file
-  #     - run: cat bank.txt
-  # testingEnv:
-  #   runs-on: ubuntu-18.04
-  #   environment:
-  #     name: staging
-  #     url: e9133nfdkfdi
-  #   steps:
-  #     - run: echo "Environment name is ${{ job.environment.name }}"
-  #test shell running
-  # testShell:
-  #   runs-on: ubuntu-18.04
-  #   env:
-  #     name: Tanzim
-  #     date: 94
-  #   steps:
-  #     - name: Print all envs
-  #       run: echo $name $date $Gallery
-  #     # - name: add gallery to env
-  #     #   run: echo "Gallery=Art gallery" >> $GITHUB_ENV
-  #     - name: Declare it at state level
-  #       env:
-  #         Gallery: Japan artwork
-  #       run: echo $Gallery
+# uploadFile:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - run: echo "Hello world" >> bank.txt
+#       - uses: actions/upload-artifact@v4
+#         with:
+#           name: Secret file
+#           path: bank.txt
 
-  #     - name: try printing gallery again
-  #       run: env
+# downloadArtifact:
+#   runs-on: ubuntu-latest
+#   needs: [uploadFile]
+#   steps:
+#     - uses: actions/download-artifact@v4
+#       with:
+#         name: Secret file
+#     - run: cat bank.txt
+# testingEnv:
+#   runs-on: ubuntu-18.04
+#   environment:
+#     name: staging
+#     url: e9133nfdkfdi
+#   steps:
+#     - run: echo "Environment name is ${{ job.environment.name }}"
+#test shell running
+# testShell:
+#   runs-on: ubuntu-18.04
+#   env:
+#     name: Tanzim
+#     date: 94
+#   steps:
+#     - name: Print all envs
+#       run: echo $name $date $Gallery
+#     # - name: add gallery to env
+#     #   run: echo "Gallery=Art gallery" >> $GITHUB_ENV
+#     - name: Declare it at state level
+#       env:
+#         Gallery: Japan artwork
+#       run: echo $Gallery
 
-  # testENV:
-  #   needs: [testShell]
-  #   runs-on: ubuntu-18.04
-  #   steps:
-  #     - run: echo $MY_VAR
+#     - name: try printing gallery again
+#       run: env
 
-  # uploadArtifact:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - run: echo "hello sundar punchid" >> message.txt
+# testENV:
+#   needs: [testShell]
+#   runs-on: ubuntu-18.04
+#   steps:
+#     - run: echo $MY_VAR
 
-  #     - uses: actions/upload-artifact@v4
-  #       with:
-  #         name: MyArtifacto
-  #         path: message.txt
+# uploadArtifact:
+#   runs-on: ubuntu-latest
+#   steps:
+#     - run: echo "hello sundar punchid" >> message.txt
 
-  # downloadArtifact:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/download-artifact@v4
-  #       with:
-  #         name: MyArtifacto
-  #     - name: Read MyArtifacto
-  #       run: cat message.txt
+#     - uses: actions/upload-artifact@v4
+#       with:
+#         name: MyArtifacto
+#         path: message.txt
 
-  # first:
-  #   runs-on: ubuntu-latest
-  #   outputs:
-  #     xyz: "HELLO MY FURRY FRIENDS"
-  #     api: ${{steps.myId.outputs.api}}
-  #     dcp: ${{steps.myId.outputs.pbc}}
-  #   steps:
-  #     - id: myId
-  #       run: |
-  #         echo "api=my key" >> $GITHUB_OUTPUT
-  #         echo "pbc=my second key" >> $GITHUB_OUTPUT
+# downloadArtifact:
+#   runs-on: ubuntu-latest
+#   steps:
+#     - uses: actions/download-artifact@v4
+#       with:
+#         name: MyArtifacto
+#     - name: Read MyArtifacto
+#       run: cat message.txt
 
-  #     - name: "Fail job manually"
-  #       run: exit 1
+# first:
+#   runs-on: ubuntu-latest
+#   outputs:
+#     xyz: "HELLO MY FURRY FRIENDS"
+#     api: ${{steps.myId.outputs.api}}
+#     dcp: ${{steps.myId.outputs.pbc}}
+#   steps:
+#     - id: myId
+#       run: |
+#         echo "api=my key" >> $GITHUB_OUTPUT
+#         echo "pbc=my second key" >> $GITHUB_OUTPUT
 
-  # second:
-  #   if: ${{always()}}
-  #   runs-on: ubuntu-18.04
-  #   needs: [first]
-  #   steps:
-  #     - name: "Fetch Data from First job"
-  #       run: |
-  #         echo ${{needs.first.outputs.xyz}}
-  #         echo ${{needs.first.outputs.api}}
-  #         echo dpc output ${{needs.first.outputs.dcp}}
+#     - name: "Fail job manually"
+#       run: exit 1
 
-  # thrid:
-  #   needs: [first, second]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: "Nice day for fishing"
-  #       run: echo I ran after first
-  #     - name: let's know the resutls of first and second
-  #       run: echo ${{needs.first.result}} ${{needs.second.result}}
+# second:
+#   if: ${{always()}}
+#   runs-on: ubuntu-18.04
+#   needs: [first]
+#   steps:
+#     - name: "Fetch Data from First job"
+#       run: |
+#         echo ${{needs.first.outputs.xyz}}
+#         echo ${{needs.first.outputs.api}}
+#         echo dpc output ${{needs.first.outputs.dcp}}
 
-  # build:
-  #   runs-on: ubuntu-18.04
-  #   steps:
-  #     - run: echo 10
+# thrid:
+#   needs: [first, second]
+#   runs-on: ubuntu-latest
+#   steps:
+#     - name: "Nice day for fishing"
+#       run: echo I ran after first
+#     - name: let's know the resutls of first and second
+#       run: echo ${{needs.first.result}} ${{needs.second.result}}
 
-  # cleanup:
-  #   runs-on: ubuntu-18.04
-  #   needs : [build]
-  #   steps:
-  #     - run: echo cleaning up resouceses
-  #     - run: echo ${{needs.build.result}}
+# build:
+#   runs-on: ubuntu-18.04
+#   steps:
+#     - run: echo 10
+
+# cleanup:
+#   runs-on: ubuntu-18.04
+#   needs : [build]
+#   steps:
+#     - run: echo cleaning up resouceses
+#     - run: echo ${{needs.build.result}}
