@@ -9,7 +9,7 @@ jobs:
   try-self-hosted:
     concurrency:
       group: staging_environment
-      cancel-in-progress: false
+      cancel-in-progress: true
     strategy:
       fail-fast: false
       matrix:
