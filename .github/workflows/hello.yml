@@ -21,11 +21,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{matrix.nodeV}}
-      - name: Fail for node 22
-        if: ${{matrix.nodeV == 22}}
-        run: |
-          echo "Manually failing for 22"
-          exit 1
       - run: npm i
       - run: npm run test
       - run: echo "building complete"
