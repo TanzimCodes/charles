@@ -7,10 +7,13 @@ on:
 
 jobs:
   try-self-hosted:
+    concurrency:
+      group: staging_environment
+      cancel-in-progress: false
     strategy:
       fail-fast: false
       matrix:
-        nodeV: [18, 22]
+        nodeV: [18, 22, 16]
     runs-on: [ubuntu-latest]
     steps:
       - run: echo Running on node ${{matrix.nodeV}}
