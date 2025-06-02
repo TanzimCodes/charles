@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        nodeV: [18, 22, 16]
+        nodeV: [18, 22,20, 16]
     runs-on: [ubuntu-latest]
     steps:
       - run: echo Running on node ${{matrix.nodeV}}
