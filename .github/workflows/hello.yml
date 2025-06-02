@@ -8,6 +8,7 @@ on:
 jobs:
   try-self-hosted:
     strategy:
+      fail-fast: false
       matrix:
         nodeV: [18, 22]
     runs-on: [ubuntu-latest]
