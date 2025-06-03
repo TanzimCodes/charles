@@ -8,3 +8,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo job2
+
+  job2:
+    runs-on: ubuntu-latest
+    needs: [job1]
+    if: ${{needs.job1.result == 'skipped'}}
+    steps:
+        - run: echo YES
+
+  job3:
+    runs-on: ubuntu-latest
+    needs: [job1]
+    if: ${{needs.job1.result != 'skipped'}}
+    steps:
+        - run: echo the run result ${{needs.job1.result}}
