@@ -1,0 +1,10 @@
+name: trySkip
+on:
+    workflow_dispatch
+
+jobs:
+  job1:
+    if: ${{github.env == 'fdf'}}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo job2
