@@ -2,19 +2,19 @@ import * as core from "@actions/core"
 import * as github from "@actions/github"
 
 async function closeIssue() {
-    const token = core.getInput('token', { required: true })
-    const issue_number = github.context.issue.number
-    const { owner, repo } = github.context.repo
+    // const token = core.getInput('token', { required: true })
+    // const issue_number = github.context.issue.number
+    // const { owner, repo } = github.context.repo
 
-    const octokit = github.getOctokit(token)
+    // const octokit = github.getOctokit(token)
     
-    await octokit.rest.issues.createComment({
-        owner, repo, issue_number, body: "Thanks, but this repository doesn't accept issues."
-    })
+    // await octokit.rest.issues.createComment({
+    //     owner, repo, issue_number, body: "Thanks, but this repository doesn't accept issues."
+    // })
 
-    await octokit.rest.issues.update({
-         owner, repo, issue_number, state: 'closed'
-    })
+    // await octokit.rest.issues.update({
+    //      owner, repo, issue_number, state: 'closed'
+    // })
 }
 
 closeIssue();
