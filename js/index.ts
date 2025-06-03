@@ -13,7 +13,7 @@ async function closeIssue() {
     })
 
     await octokit.rest.issues.update({
-         owner, repo, issue_number, status: 'closed'
+         owner, repo, issue_number, state: 'closed'
     })
 }
 
