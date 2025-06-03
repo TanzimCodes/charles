@@ -1,0 +1,15 @@
+name: test for tmate
+
+on:
+    workflow_dispatch
+
+jobs:
+    testTmate:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout repo
+              uses: actions/checkout@v4
+            - name: setup tmate
+              uses: mxschmitt/action-tmate@v3
+            - name: simple bash
+              run: echo hello world
