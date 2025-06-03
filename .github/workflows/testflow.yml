@@ -9,7 +9,8 @@ jobs:
         steps:
             - name: checkout repo
               uses: actions/checkout@v4
-            - name: setup tmate
-              uses: mxschmitt/action-tmate@v3
             - name: simple bash
               run: echo hello world
+            - run: | 
+               myVar=2
+               echo $myVar
