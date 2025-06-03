@@ -1,0 +1,26 @@
+name: Continue on Error Demo
+
+on: [workflow_dispatch]
+
+jobs:
+  job-that-fails:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Simulate failure
+        run: |
+          echo "This job will fail but not stop the workflow"
+          exit 1
+
+  dependent-job-default:
+    needs: job-that-fails
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "❌ You won't see this unless job-that-fails succeeds"
+
+  dependent-job-always:
+    needs: job-that-fails
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - run: echo "✅ This runs regardless of job-that-fails status"

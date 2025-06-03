@@ -1,0 +1,52 @@
+name: Environment Variable Demo
+
+on: [workflow_dispatch]
+
+env:
+  WORKFLOW_LEVEL_VAR: "🌍 Workflow level"
+
+jobs:
+  env-demo:
+    runs-on: ubuntu-latest
+
+    env:
+      JOB_LEVEL_VAR: "💼 Job level"
+    if: ${{ env.WORKFLOW_LEVEL_VAR == 'f' }}
+    steps:
+      - name: Step-level env
+        env:
+          STEP_LEVEL_VAR: "📦 Step level"
+        run: |
+          echo "From step-level (shell): $STEP_LEVEL_VAR"
+          echo "From job-level (shell): $JOB_LEVEL_VAR"
+          echo "From workflow-level (shell): $WORKFLOW_LEVEL_VAR"
+          echo "From step-level (expression): ${{ env.STEP_LEVEL_VAR }}"
+          echo "From job-level (expression): ${{ env.JOB_LEVEL_VAR }}"
+          echo "From workflow-level (expression): ${{ env.WORKFLOW_LEVEL_VAR }}"
+
+      - name: Set dynamic env using GITHUB_ENV
+        run: |
+          echo "DYNAMIC_VAR=🧪 Set at runtime" >> $GITHUB_ENV
+
+      - name: Use dynamically set env
+        run: |
+          echo "Dynamic env (shell): $DYNAMIC_VAR"
+          echo "Dynamic env (expression): ${{ env.DYNAMIC_VAR }}"  # works from second step onward
+
+      - name: Define env using output (advanced)
+        id: generate
+        run: echo "value=🎯 Output value" >> $GITHUB_OUTPUT
+
+      - name: Use job output as env (via expressions)
+        run: |
+          echo "Output from previous step: ${{ steps.generate.outputs.value }}"
+
+      - name: Inline expression-based env
+        env:
+          INLINE_VAR: "${{ '💡 Inline value' }}"
+        run: |
+          echo "Inline env var (expression): $INLINE_VAR"
+
+      - name: Matrix-level env (simulated)
+        run: |
+          echo "This would be set via matrix if this was a matrix job"
