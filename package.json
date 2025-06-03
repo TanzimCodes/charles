@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "esbuild js/index.ts --bundle --platform=node --target=node20 --outfile=js/index.js && act push -e event.json"
+    "build": "esbuild js/index.ts --bundle --platform=node --target=node20 --outfile=js/index.js && act issues -e event.json"
   },
   "keywords": [],
   "author": "",

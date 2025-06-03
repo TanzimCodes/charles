@@ -1,5 +1,6 @@
 {
-  "issue": {
-    "number": 1
-  }
+    "action": "opened",
+    "issue": {
+        "number": 5
+    }
 }
