@@ -1,0 +1,13 @@
+name: myCustom
+description: This action is for summing numbers
+
+inputs:
+  name:
+   description: Name input
+   required: true
+   default: "Tanzim"
+
+
+runs:
+ using: node20
+ main: 'main.js'

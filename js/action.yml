@@ -1,0 +1,14 @@
+name: post comment
+description: post a commnet on a pr
+
+inputs:
+  token:
+   description: This is the api token
+   required: true
+  comment:
+    description: Comment to be added to the pr
+    required: true
+
+runs:
+  using: node20
+  main: index.js

@@ -1,0 +1,19 @@
+name: CLOSE ISSUE
+
+on:
+    issues:
+     types: [opened]
+
+jobs:
+ callJSAction:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+        - name: use custom action for adding
+          id: sum
+          uses: ./js
+          with:
+            token: ${{secrets.TOKEN}}
+            label: "Bug"
+
+    

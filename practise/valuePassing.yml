@@ -1,0 +1,27 @@
+name: value passing
+
+on: workflow_dispatch
+
+jobs:
+    job1:
+        runs-on: ubuntu-latest
+        outputs:
+            myName: '${{steps.yeah.outputs.myName}}'
+        steps:
+         - name: declare var 
+           id: yeah
+           run: |
+            echo "myName=Tanzim" >> $GITHUB_OUTPUT
+            echo "myName=Tanzim" >> $GITHUB_ENV
+         - name: get Name
+           run: | 
+            echo Fetched name from outputs ${{steps.yeah.outputs.myName}}
+            echo Fetched name from env${{env.myName}}
+    job2:
+        needs: [job1]
+        runs-on: ubuntu-latest
+        steps:
+         - name: get Name
+           run: | 
+            echo Fetched name from outputs ${{needs.job1.outputs.myName}}
+            echo Fetched name from env ${{env.myName}}
