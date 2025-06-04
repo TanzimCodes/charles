@@ -1,8 +1,8 @@
-name: p
+name: push on commit
 on:
     push
 jobs:
     job1:
-        runs-on: utbuntu-latest
+        runs-on: ubuntu-latest
         steps:
             - run: echo hello
