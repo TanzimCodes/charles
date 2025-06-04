@@ -1,0 +1,8 @@
+name: p
+on:
+    push
+jobs:
+    job1:
+        runs-on: utbuntu-latest
+        steps:
+            - run: echo hello
